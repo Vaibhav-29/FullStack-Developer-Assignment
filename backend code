@@ -1,0 +1,57 @@
+// TradeDetails.java
+import javax.persistence.*;
+
+@Entity
+@Table(name = "trade_details")
+public class TradeDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "trade_date_time")
+    private LocalDateTime tradeDateTime;
+
+    @Column(name = "stock_name")
+    private String stockName;
+
+    @Column(name = "listing_price")
+    private BigDecimal listingPrice;
+
+    @Column(name = "quantity")
+    private int quantity;
+
+    @Column(name = "type")
+    private String type; // buy or sell
+
+    @Column(name = "price_per_unit")
+    private BigDecimal pricePerUnit;
+
+    // getters and setters
+}
+
+// TradeDetailsRepository.java
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface TradeDetailsRepository extends JpaRepository<TradeDetails, Long> {
+}
+
+// TradeDetailsController.java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/trade-details")
+public class TradeDetailsController {
+    @Autowired
+    private TradeDetailsRepository tradeDetailsRepository;
+
+    @PostMapping
+    public TradeDetails addTrade(@RequestBody TradeDetails trade) {
+        return tradeDetailsRepository.save(trade);
+    }
+
+    // Add endpoints for update and delete
+}
