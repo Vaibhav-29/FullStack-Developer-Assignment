@@ -1,0 +1,22 @@
+-- Create trade_details table
+CREATE TABLE trade_details (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    trade_date_time DATETIME,
+    stock_name VARCHAR(255),
+    listing_price DECIMAL(10, 2),
+    quantity INT,
+    type ENUM('buy', 'sell'),
+    price_per_unit DECIMAL(10, 2)
+);
+
+-- Create order_master table
+CREATE TABLE order_master (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    trade_id INT,
+    quantity INT,
+    per_unit_price DECIMAL(10, 2),
+    type ENUM('buy', 'sell'),
+    stock_name VARCHAR(255),
+    status VARCHAR(50),
+    FOREIGN KEY (trade_id) REFERENCES trade_details(id)
+);
